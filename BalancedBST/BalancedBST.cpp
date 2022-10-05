@@ -56,32 +56,42 @@ int main()
 
 	bst.insert("Lisa", 19498849); //work to have a leading 0 work too
 	bst.insert("Nicole", 22222222);
+	bst.insert("Frank", 12111001);
 	bst.insert("Stefan", 20202020);
 	bst.insert("John", 37010101);
-	bst.insert("Nick", 61845122);
-	bst.insert("Carol", 35264789);
-	bst.insert("Tommy", 30215174);
-	bst.insert("Frank", 10011001);
-	bst.insert("Dina", 12345678);
+	bst.insert("Dina", 10345678);
 	bst.insert("Gary", 14235879);
-	bst.insert("Todd", 11000221);
+	//bst.insert("Gary", 11235879);
+	//bst.insert("Gary", 64235879);
+
 
 	bst.inorder();
+	bst.removeinOrder(3);
+	bst.inorder();
+	//bst.insert("Nick", 61845122);
+	//bst.preorder();
 	//bst.removal(19498849);
-	cout << endl;
-	bst.preorder();
-	cout << endl;
-	bst.search(11000221);
+	//bst.insert("Carol", 35264789);
+	//bst.insert("Tommy", 30215174);
+	//bst.insert("Todd", 11000221);
+	//bst.inorder();
+	//bst.printLevelCount();
+	//bst.removeinOrder(3);
+	//bst.preorder();
+	//bst.removal(35264789);
+	//cout << endl;
+	//bst.inorder();
+	//cout << endl;
+	//bst.search(11000221);
 	//bst.search("Todd");
 
 	//bst.insert("G", 11000221);
-	bst.removeinOrder(4);
+	//bst.removeinOrder(4); // shoulld remove Gary
 	//bst.inorder();
 	//cout << endl;
 	//bst.removal(35264789);
 	//bst.inorder();
 	//cout << endl;
-	//cout << bst.root->right->name;
 
 	//bst.inorder();
 }

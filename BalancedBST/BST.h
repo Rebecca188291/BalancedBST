@@ -3,9 +3,9 @@
 #include <string>
 #include <vector>
 using namespace std;
-
 class BST
 {
+
 	struct TreeNode
 	{
 		int val;
@@ -20,24 +20,27 @@ class BST
 	};
 
 	TreeNode* root = nullptr;
-	BST::TreeNode* helperInsert(TreeNode* root, string a, int key);
+	BST::TreeNode* helperInsert(TreeNode* root, string a, int key, TreeNode*& mainRoot);
 	void helpInorder(TreeNode* root);
 	bool helpValidName(string a);
 	bool helpValidKey(int key);
 	BST::TreeNode* helperSearchID(TreeNode* root, int key);
-	BST::TreeNode* helperSearchName(TreeNode* root, string a);
+	void helperSearchName(TreeNode* root, string a);
 	BST::TreeNode* parentSearch(TreeNode* root, int key);
 	BST::TreeNode* successorFinder(TreeNode* root);
 	void calculateBF(TreeNode* root);
 	void calculateH(TreeNode* root);
-	void rotation(TreeNode* parent, TreeNode* child);
-	void rightRotation(TreeNode* parent, TreeNode* child);
-	void leftRotation(TreeNode* parent, TreeNode* child);
-	void rightLeftRotation(TreeNode* parent, TreeNode* child);
-	void leftRightRotation(TreeNode* parent, TreeNode* child);
+	void rotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot);
+	void rightRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot);
+	void leftRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot);
+	void rightLeftRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot);
+	void leftRightRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot);
 	void findNNode(TreeNode* root, int n);
 	void helperPreorder(TreeNode* root);
 	void helperPostorder(TreeNode* root);
+	void removalHelper(int key);
+	void removeMainRoot(TreeNode*& mainRoot);
+	void printLevelHelper(TreeNode* root);
 
 public:
 	void inorder();
@@ -48,5 +51,6 @@ public:
 	void search(string a);
 	void removal(int key);
 	void removeinOrder(int n);
+	void printLevelCount();
 };
 
