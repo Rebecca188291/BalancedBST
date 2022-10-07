@@ -9,6 +9,7 @@ Insert function:
 	but I seem to be struggling with actually getting this->root to update to a new root. I have not yet gotten rotations working
 	with something that wasn't involving the root, but that should be good now
 	~Still need to have the option for leading zeros
+	~create a function to test if my main root is chanignig without reference var
 
 Remove function:
 	~Readjust height

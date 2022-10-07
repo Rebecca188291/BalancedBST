@@ -5,7 +5,7 @@
 using namespace std;
 class BST
 {
-
+public:
 	struct TreeNode
 	{
 		int val;
@@ -20,7 +20,12 @@ class BST
 	};
 
 	TreeNode* root = nullptr;
-	BST::TreeNode* helperInsert(TreeNode* root, string a, int key, TreeNode*& mainRoot);
+
+
+	void bruhTester();
+
+
+	BST::TreeNode* helperInsert(TreeNode* root, string a, int key);
 	void helpInorder(TreeNode* root);
 	bool helpValidName(string a);
 	bool helpValidKey(int key);
@@ -30,19 +35,20 @@ class BST
 	BST::TreeNode* successorFinder(TreeNode* root);
 	void calculateBF(TreeNode* root);
 	void calculateH(TreeNode* root);
-	void rotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot);
-	void rightRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot);
-	void leftRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot);
-	void rightLeftRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot);
-	void leftRightRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot);
+	void rotation(TreeNode* parent, TreeNode* child);
+	void rightRotation(TreeNode* parent, TreeNode* child);
+	void leftRotation(TreeNode* parent, TreeNode* child);
+	void rightLeftRotation(TreeNode* parent, TreeNode* child);
+	void leftRightRotation(TreeNode* parent, TreeNode* child);
 	void findNNode(TreeNode* root, int n);
 	void helperPreorder(TreeNode* root);
 	void helperPostorder(TreeNode* root);
 	void removalHelper(int key);
-	void removeMainRoot(TreeNode*& mainRoot);
+	void removeMainRoot();
 	void printLevelHelper(TreeNode* root);
+	void test();
 
-public:
+
 	void inorder();
 	void preorder();
 	void postorder();

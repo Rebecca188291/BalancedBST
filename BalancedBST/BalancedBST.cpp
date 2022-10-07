@@ -10,15 +10,13 @@ using namespace std;
 int main()
 {
 	BST bst;
-
-	//string numCommands;
-	//vector<string> commands;
-	//getline(cin, numCommands);
-	//int numCommandsInt = stoi(numCommands);
-
-	//string command;
-
-	/*
+/*
+	string numCommands;
+	vector<string> commands;
+	getline(cin, numCommands);
+	int numCommandsInt = stoi(numCommands);
+	string command;
+	
 	for (int i = 0; i < numCommandsInt; i++)
 	{
 		getline(cin, command);
@@ -26,6 +24,7 @@ int main()
 		{
 			if (command[i] == ' ')
 			{
+				if (command[i + 1] )
 				commands.push_back(command.substr(0, i));
 				command.erase(0, i + 1); //erase the space
 			}
@@ -54,20 +53,69 @@ int main()
 	*/
 
 
-	bst.insert("Lisa", 19498849); //work to have a leading 0 work too
-	bst.insert("Nicole", 22222222);
-	bst.insert("Frank", 12111001);
-	bst.insert("Stefan", 20202020);
-	bst.insert("John", 37010101);
-	bst.insert("Dina", 10345678);
-	bst.insert("Gary", 14235879);
+	BST myTree;
+	myTree.insert("Rebechka", 69696969);
+	myTree.insert("hi", 72584671);
+	myTree.insert("Styops", 42042069);
+	myTree.insert("Bruh", 19777777);
+	myTree.insert("tank", 18777777);
+	//myTree.insert("chaco", 50999999);
+	myTree.preorder();
+
+	cout << endl << endl << endl;
+	//myTree.bruhTester();
+	//cout << myTree.root->name << endl;
+	//cout << myTree.root->name << endl;
+	BST::TreeNode* parent = myTree.root->left;
+	BST::TreeNode* child = parent->left;
+	myTree.leftRotation(parent, child);
+	myTree.preorder();
+
+	/*
+	if (myTree.root->left->right != nullptr)
+	{
+		cout << "right val: " << endl;
+		cout << myTree.root->right->right->name << endl;
+	}
+	if (myTree.root->left->left != nullptr)
+	{
+		cout << "left val: " << endl;
+		cout << myTree.root->right->left->name << endl;
+	}
+	*/
+	//myTree.rightRotation(myTree.root, myTree.root->right);
+	//myTree.removeMainRoot();
+	//cout << "new main root" << myTree.root->name << endl;
+
+
+	//cout << myTree.root->name << endl;
+	//cout << myTree.root->val << endl;
+
+
+
+
+
+
+	//bst.insert("Lisa", 19498849); //work to have a leading 0 work too
+	//bst.insert("Nicole", 22222222);
+	////bst.insert("Frank", 12111001);
+	////bst.insert("Stefan", 20202020);
+	//bst.insert("John", 37010101);
+	//bst.test();
+	//myTree.preorder();
+
+	//bst.insert("Dina", 10345678);
+	//bst.insert("Gary", 14235879);
 	//bst.insert("Gary", 11235879);
 	//bst.insert("Gary", 64235879);
+	//for (int i = 10000000; i < 10001001; i++)
+	//{
+	//	bst.insert("a", i);
+	//}
 
-
-	bst.inorder();
-	bst.removeinOrder(3);
-	bst.inorder();
+	//bst.inorder();
+	//bst.removeinOrder(3);
+	//bst.inorder();
 	//bst.insert("Nick", 61845122);
 	//bst.preorder();
 	//bst.removal(19498849);

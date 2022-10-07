@@ -1,11 +1,19 @@
 #include "BST.h"
+using namespace std;
 
+
+//test
+void BST::test()
+{
+	TreeNode* child = this->root->right;
+	child->left = this->root;
+	this->root->right = nullptr;
+	this->root = child;
+}
 
 //the insertion functions
-BST::TreeNode* BST::helperInsert(TreeNode* root, string a, int key, TreeNode*& mainRoot)
+BST::TreeNode* BST::helperInsert(TreeNode* root, string a, int key)
 {
-	//calculateH(root);
-	//calculateBF(root);
 	if (root == nullptr)
 	{
 		cout << "successful" << endl;
@@ -13,17 +21,17 @@ BST::TreeNode* BST::helperInsert(TreeNode* root, string a, int key, TreeNode*& m
 	}
 	else if (key < root->val)
 	{
-		root->left = helperInsert(root->left, a, key, mainRoot);
+		root->left = helperInsert(root->left, a, key);
 
 	}
 	else
 	{
-		root->right = helperInsert(root->right, a, key, mainRoot);
+		root->right = helperInsert(root->right, a, key);
 
 	}
-	calculateH(root);
-	calculateBF(root);	
 
+/*	calculateH(root);
+	calculateBF(root);	
 	if ((root->BF > 1 || root->BF < -1))
 	{
 		if (root->left != nullptr)
@@ -31,7 +39,9 @@ BST::TreeNode* BST::helperInsert(TreeNode* root, string a, int key, TreeNode*& m
 			if (root->left->BF == 1 || root->left->BF == -1)
 			{
 				cout << "will pass in left root" << endl;
-				rotation(root, root->left, mainRoot);
+				rotation(root, root->left);
+				//recalculate
+				return root;
 			}
 		}
 		if (root->right != nullptr)
@@ -39,12 +49,13 @@ BST::TreeNode* BST::helperInsert(TreeNode* root, string a, int key, TreeNode*& m
 			if (root->right->BF == 1 || root->right->BF == -1)
 			{
 				cout << "will pass in right root." <<  endl;
-				rotation(root, root->right, mainRoot);
+				rotation(root, root->right);
+				//recalculate
+				return root;
 			}
 		}
 	}
-	calculateH(root);
-	calculateBF(root);
+	*/
 	return root;
 }
 void BST::insert(string a, int key)
@@ -61,14 +72,7 @@ void BST::insert(string a, int key)
 	}
 	else
 	{
-		if (this->root == nullptr)
-		{
-			this->root = new TreeNode(a, key);
-			TreeNode*& mainRoot = this->root;
-			cout << "successful" << endl;
-			return;
-		}
-		helperInsert(this->root, a, key, this->root);
+		this->root = helperInsert(this->root, a, key);
 	}
 }
 
@@ -446,30 +450,30 @@ void BST::removalHelper(int key)
 	//calculateH(this->root);
 	return;
 }
-void BST::removeMainRoot(TreeNode*& mainRoot)
+void BST::removeMainRoot()
 {
-	if (mainRoot->right != nullptr)
+	if (this->root->right != nullptr)
 	{
-		TreeNode* successor = successorFinder(mainRoot->right);
-		TreeNode* toDelete = mainRoot;
-		successor->left = mainRoot->left;
-		mainRoot = successor;
+		TreeNode* successor = successorFinder(this->root->right);
+		TreeNode* toDelete = this->root;
+		successor->left = this->root->left;
+		this->root = successor;
 		delete toDelete;
 	}
-	else if (mainRoot->left != nullptr)
+	else if (this->root->left != nullptr) //idk if this is actually correct?
 	{
-		TreeNode* toDelete = mainRoot;
-		mainRoot->left = nullptr;
-		mainRoot = mainRoot->left;
+		TreeNode* toDelete = this->root;
+		this->root->left = nullptr;
+		this->root = this->root->left;
 		delete toDelete;
 	}
-	else if (mainRoot == nullptr)
+	else if (this->root == nullptr)
 	{
 		return;
 	}
 	else
 	{
-		mainRoot = nullptr;
+		this->root = nullptr;
 	}
 
 }
@@ -478,7 +482,7 @@ void BST::removal(int key)
 	if (this->root->val == key)
 	{
 		cout << "remove main root" << endl;
-		removeMainRoot(this->root);
+		removeMainRoot();
 	}
 	else
 	{
@@ -536,17 +540,17 @@ void BST::calculateH(TreeNode* root)
 
 	//|| (root->left->height < root->right->height)
 }
-void BST::rotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot)
+void BST::rotation(TreeNode* parent, TreeNode* child)
 {
 	if (parent->BF == 2 && child->BF == 1)
 	{
 		cout << "right rotation" << endl;
-		rightRotation(parent, child, mainRoot);
+		rightRotation(parent, child);
 	}
 	else if (parent->BF == -2 && child->BF == -1)
 	{
 		cout << "left rotation" << endl;
-		leftRotation(parent, child, mainRoot);
+		leftRotation(parent, child);
 	}
 	else if (parent->BF == 2 && child->BF == -1)
 	{
@@ -555,25 +559,20 @@ void BST::rotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot)
 	else
 	{
 		cout << "pass into right Left" << endl;
-		rightLeftRotation(parent, child, mainRoot);
+		rightLeftRotation(parent, child);
 	}
 	return;
 }
-void BST::rightRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot)
+void BST::rightRotation(TreeNode* parent, TreeNode* child)
 {
-	TreeNode* grandpa = parentSearch(mainRoot, parent->val);
+	TreeNode* grandpa = parentSearch(this->root, parent->val);
 	if (grandpa == nullptr)
 	{
 		child->left = parent;
+		cout << child->name << endl;
 		parent->right = nullptr;
-		mainRoot = child;
+		this->root = child;
 		return;
-	}
-	if (grandpa->val < child->val)
-	{
-		child->left = parent;
-		parent->right = nullptr;
-		grandpa->right = child;
 	}
 	else
 	{
@@ -583,35 +582,28 @@ void BST::rightRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot)
 	}
 	return;
 }
-void BST::leftRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot)
+void BST::leftRotation(TreeNode* parent, TreeNode* child)
 {
-	TreeNode* grandpa = parentSearch(mainRoot, parent->val);
+	TreeNode* grandpa = parentSearch(this->root, parent->val);
 	if (grandpa == nullptr)
 	{
-		child->left = parent;
-		parent->right = nullptr;
-		mainRoot = child;
-		cout << "new main root: " << mainRoot->name << endl;
+		child->right = parent;
+		parent->left = nullptr;
+		this->root = child;
 		return;
-	}
-	if (grandpa->val < child->val)
-	{
-		child->left = parent;
-		grandpa->right = nullptr;
-		grandpa->right = child;
-		parent->right = nullptr;
 	}
 	else
 	{
 		child->right = parent;
 		parent->left = nullptr;
-		grandpa->right = child;
+		grandpa->left = child;
 	}
+	
 	return;
 }
-void BST::rightLeftRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot)
+void BST::rightLeftRotation(TreeNode* parent, TreeNode* child)
 {
-	TreeNode* grandpa = parentSearch(mainRoot, parent->val);
+	TreeNode* grandpa = parentSearch(this->root, parent->val);
 	TreeNode* grandchild = nullptr;
 	if (grandpa == nullptr)
 	{
@@ -619,7 +611,7 @@ void BST::rightLeftRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRo
 		grandchild = child->left;
 		grandchild->right = child;
 		grandchild->left = parent;
-		mainRoot = grandchild;
+		this->root = grandchild;
 		parent->right = nullptr;
 		child->left = nullptr;
 		cout << "grandpa null" << endl;
@@ -636,7 +628,7 @@ void BST::rightLeftRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRo
 	else
 	{
 		//actually have to find grandchild
-		grandchild->right = child;
+		//grandchild->right = child;
 		grandchild->left = parent;
 		grandpa->left = grandchild;
 		child->left = nullptr;
@@ -644,7 +636,7 @@ void BST::rightLeftRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRo
 	}
 	return;
 }
-void BST::leftRightRotation(TreeNode* parent, TreeNode* child, TreeNode*& mainRoot)
+void BST::leftRightRotation(TreeNode* parent, TreeNode* child)
 {}
 
 //Functions for removing nth node
@@ -672,6 +664,15 @@ void BST::findNNode(TreeNode* root, int n)
 void BST::removeinOrder(int n)
 {
 	findNNode(this->root, n);
+}
+
+void BST::bruhTester()
+{
+	cout << root->name << endl;
+	TreeNode* temp = root;
+	root = root->right;
+	root->right = temp;
+	cout << root->name << endl;
 }
 
 
