@@ -40,14 +40,16 @@ int main()
 
 	BST myTree;
 	myTree.insert("Rebechka", 69696969);
-	myTree.insert("hi", 72584671);
-	myTree.insert("Styops", 42042069);
-	myTree.insert("Bruh", 19777777);
-	myTree.insert("tank", 18777777);
-	myTree.insert("kirby", 88777777);
+	//myTree.insert("hi", 72584671);
+	myTree.insert("Styops", 82042069);
+	//myTree.insert("Bruh", 19777777);
+	//myTree.insert("tank", 18777777);
+	myTree.insert("kirby", 78777777);
 	//myTree.insert("chaco", 70999999);
-	myTree.insert("mabel", 90999999);
-	myTree.insert("YESSS", 21000000);
+	//myTree.insert("mabel", 90999999);
+	//myTree.insert("YESSS", 21000000);
+	//myTree.insert("wowww", 31000000);
+
 	//myTree.insert("Frank", 18999999);
 	myTree.preorder();
 	//myTree.removal(69696969);

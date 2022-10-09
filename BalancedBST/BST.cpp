@@ -37,6 +37,8 @@ BST::TreeNode* BST::helperInsert(TreeNode* root, string a, int key)
 	{
 		TreeNode* newRoot = rotate(root);
 		cout << "new root: " << newRoot->name << endl;
+		calculateH(root);
+		calculateBF(root); //still need to fix this :)
 		return newRoot;
 	}
 		//first check to see if the left is the issue
@@ -653,7 +655,7 @@ void BST::calculateH(TreeNode* root)
 BST::TreeNode* BST::rotate(TreeNode* node)
 {
 	TreeNode* child = nullptr;
-	if (node->right != nullptr && node->right->BF == -1)
+	if (node->right != nullptr && (node->right->BF == -1 || node->right->BF == 1))
 	{
 		child = node->right;
 		cout << "child: " << child->name << endl;
@@ -674,14 +676,25 @@ BST::TreeNode* BST::rotate(TreeNode* node)
 		}
 		else
 		{
-			////right left rotation
+			TreeNode* grandchild = child->left;
+			grandchild->right = child;
+			child->left = nullptr;
+			grandchild->left = node;
+			node->right = nullptr;
+			return grandchild;
+
 		}
 	}
 	else
 	{
 		if (child->BF == -1)
 		{
-			//left right rotation
+			TreeNode* grandchild = child->right;
+			grandchild->left = child;
+			child->right = nullptr;
+			grandchild->right = node;
+			node->left = nullptr;
+			return grandchild;
 		}
 		else
 		{
