@@ -35,8 +35,8 @@ public:
 	BST::TreeNode* successorFinder(TreeNode* root);
 	void calculateBF(TreeNode* root);
 	void calculateH(TreeNode* root);
-	void rotation(TreeNode* parent, TreeNode* child);
-	void rightRotation(TreeNode* parent, TreeNode* child);
+	BST::TreeNode* rotate(TreeNode* node);
+	//BST::TreeNode* rightRotation(TreeNode* parent);
 	void leftRotation(TreeNode* parent, TreeNode* child);
 	void rightLeftRotation(TreeNode* parent, TreeNode* child);
 	void leftRightRotation(TreeNode* parent, TreeNode* child);
@@ -44,7 +44,8 @@ public:
 	void helperPreorder(TreeNode* root);
 	void helperPostorder(TreeNode* root);
 	void removalHelper(int key);
-	void removeMainRoot();
+	//void removeMainRoot();
+	void updateHeightAfterRemove(TreeNode* root, int key);
 	void printLevelHelper(TreeNode* root);
 	void test();
 
