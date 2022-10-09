@@ -5,7 +5,6 @@
 using namespace std;
 class BST
 {
-public:
 	struct TreeNode
 	{
 		int val;
@@ -21,10 +20,6 @@ public:
 
 	TreeNode* root = nullptr;
 
-
-	void bruhTester();
-
-
 	BST::TreeNode* helperInsert(TreeNode* root, string a, int key);
 	void helpInorder(TreeNode* root);
 	bool helpValidName(string a);
@@ -33,22 +28,20 @@ public:
 	void helperSearchName(TreeNode* root, string a);
 	BST::TreeNode* parentSearch(TreeNode* root, int key);
 	BST::TreeNode* successorFinder(TreeNode* root);
-	void calculateBF(TreeNode* root);
-	void calculateH(TreeNode* root);
+	int calculateBF(TreeNode* root);
+	int calculateH(TreeNode* root);
 	BST::TreeNode* rotate(TreeNode* node);
-	//BST::TreeNode* rightRotation(TreeNode* parent);
 	void leftRotation(TreeNode* parent, TreeNode* child);
 	void rightLeftRotation(TreeNode* parent, TreeNode* child);
 	void leftRightRotation(TreeNode* parent, TreeNode* child);
-	void findNNode(TreeNode* root, int n);
+	void findNNode(TreeNode* root, int n, int& num);
 	void helperPreorder(TreeNode* root);
 	void helperPostorder(TreeNode* root);
 	void removalHelper(int key);
-	//void removeMainRoot();
 	void updateHeightAfterRemove(TreeNode* root, int key);
 	void printLevelHelper(TreeNode* root);
-	void test();
 
+public:
 
 	void inorder();
 	void preorder();
