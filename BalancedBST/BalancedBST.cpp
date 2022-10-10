@@ -40,34 +40,33 @@ int main()
 
 	BST myTree;
 	myTree.insert("Rebechka", 69696969);
-	myTree.insert("hi", 12584671);
+	myTree.insert("hi", 72584671);
 	//myTree.preorder();
 	myTree.insert("Styops", 42042069);
-	myTree.preorder();
-	cout << endl << endl;
 	myTree.insert("Bruh", 19777777);
-	myTree.preorder();
-	cout << endl << endl;
-	myTree.insert("tank", 18777777);
+	myTree.insert("tank", 58777777);
 	//myTree.preorder();
-	myTree.preorder();
-	cout << endl << endl;
 
-	//myTree.insert("kirby", 78777777);
-	//myTree.insert("chaco", 70999999);
+	myTree.insert("kirby", 78777777);
+	myTree.insert("chaco", 71599999);
+	myTree.insert("mabel", 71999999);
 	//myTree.preorder();
 	//cout << endl << endl;
+	myTree.insert("YESSS", 70000000);
+	myTree.insert("wowww", 71000000);
+	myTree.insert("Frank", 18999999);
+	myTree.insert("joe", 71699999);
+	myTree.preorder();
+	cout << endl << endl;
 
-	//myTree.insert("mabel", 90999999);
+	myTree.removal(19777777);
+	myTree.preorder();
+	cout << endl << endl;
 	//myTree.preorder();
-	//cout << endl << endl;
 
-	//myTree.insert("YESSS", 21000000);
-	//myTree.insert("wowww", 31000000);
 
 	//myTree.removeinOrder(4);
 
-	//myTree.insert("Frank", 18999999);
 	//myTree.preorder();
 	//myTree.removal(69696969);
 	//cout << endl;

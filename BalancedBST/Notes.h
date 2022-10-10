@@ -4,19 +4,14 @@ class Notes
 };
 
 /*
-
-Saturday To Do list:
-1. update height after removal
-
-
+TO DO:
+1. fix removeInOrderN
+2. Fix parsing
+4. fix printing
+5. DEBUG
 
 Main:
-	~Still need to work on parsing, allow spaces in name and allow for leading zeros.
-
-
-Remove function:
-	~Redo the entire thing to be recursive so that heigh can be easily updated, but double check if 
-	this is ok
+	~Still need to work on parsing, allow spaces in name and allow for leading zeros
 
 Parsing:
 	~Allow for names with spaces

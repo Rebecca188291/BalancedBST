@@ -15,7 +15,10 @@ BST::TreeNode* BST::helperInsert(TreeNode* root, string a, int key)
 	else if (key < root->val)
 	{
 		root->left = helperInsert(root->left, a, key);
-
+		if (root->left->val == 18999999)
+		{
+			cout << root->name << endl;
+		}
 	}
 	else
 	{
@@ -29,14 +32,20 @@ BST::TreeNode* BST::helperInsert(TreeNode* root, string a, int key)
 	if (root->BF > 1 || root->BF < -1)
 	{
 		TreeNode* newRoot = rotate(root);
-		//cout << "new root: " << newRoot->name << endl;
+		cout << "new root: " << newRoot->name << endl;
 		//newRoot->height = calculateH(newRoot);
 		//cout << newRoot->height << endl;
 		//newRoot->BF = calculateBF(newRoot);
 		//cout << newRoot->BF << endl;
 		return newRoot;
 	}
-
+	if (root->left != nullptr)
+	{
+		if (root->left->val == 18999999)
+		{
+			cout << "franks parent: " << root->name << endl;
+		}
+	}
 	return root;
 }
 void BST::insert(string a, int key)
@@ -229,80 +238,20 @@ void BST::updateHeightAfterRemove(TreeNode* root, int key)
 	}
 	else if (root->val == key)
 	{
-		int rh = 0;
-		int lh = 0;
-		if (root->left != nullptr)
-		{
-			lh = root->left->height;
-		}
-		if (root->right != nullptr)
-		{
-			rh = root->right->height;
-		}
-		if ((rh > lh) && (root->right != nullptr))
-		{
-			root->height = root->right->height + 1;
-		}
-		else if ((lh >= rh) && (root->left != nullptr))
-		{
-			root->height = root->left->height + 1;
-
-		}
-		else
-		{
-			root->height = 1;
-		}
+		root->height = calculateH(root);
 		return;
 	}
 	else if (root->val < key)
 	{
 		updateHeightAfterRemove(root->right, key);
-		int rh = 0;
-		int lh = 0;
-		if (root->left != nullptr)
-		{
-			lh = root->left->height;
-		}
-		if (root->right != nullptr)
-		{
-			rh = root->right->height;
-		}
-		if (rh > lh)
-		{
-			root->height = rh + 1;
-		}
-		else
-		{
-			root->height = lh + 1;
-
-		}		
-		return;
 	}
 	else
 	{
-		updateHeightAfterRemove(root->left, key);
-		int rh = 0;
-		int lh = 0;
-		if (root->left != nullptr)
-		{
-			lh = root->left->height;
-		}
-		if (root->right != nullptr)
-		{
-			rh = root->right->height;
-		}
-		if (rh > lh)
-		{
-			root->height = rh + 1;
-		}
-		else
-		{
-			root->height = lh + 1;
-
-		}
-		cout << "after update: " << "height: " << root->height << endl;		
-		return;
+		updateHeightAfterRemove(root->left, key);	
 	}
+
+	root->height = calculateH(root);
+	return;
 }
 BST::TreeNode* BST::parentSearch(TreeNode* root, int key)
 {
@@ -378,15 +327,16 @@ void BST::removalHelper(int key)
 			parentofDelete = parentSearch(this->root, toDelete->val);
 			parentSuccessor = parentSearch(this->root, successor->val);
 			parentSuccessor->left = nullptr;
+			if (successor->right != nullptr)
+			{
+				parentSuccessor->left = successor->right;
+			}
 			successor->left = toDelete->left;
 			successor->right = toDelete->right;
 			this->root = successor;
 			delete toDelete;
-			cout << "i got to this point" << endl;
-			cout << this->root->right->name << endl;
-			cout << this->root->name << endl;
-			cout << successor->right->name << endl;
-			//updateHeightAfterRemove(this->root, parentofDelete->val);
+			toDelete = nullptr;
+			updateHeightAfterRemove(this->root, parentSuccessor->val);
 		}
 		else
 		{
@@ -395,6 +345,9 @@ void BST::removalHelper(int key)
 		return;
 
 	}
+
+
+
 
 	//if its not the main root, find the parent
 	parentofDelete = parentSearch(this->root, key);
@@ -413,29 +366,39 @@ void BST::removalHelper(int key)
 		{
 			parentofDelete->right = nullptr;
 			delete toDelete;
+			toDelete = nullptr;
 			cout << "successful" << endl;
 		}
 		else if ((toDelete->left != nullptr) && (toDelete->right == nullptr))
 		{
 			parentofDelete->right = toDelete->left;
+			delete toDelete;
+			toDelete = nullptr;
 			cout << "successful" << endl;
 
 		}
 		else if ((toDelete->left == nullptr) && (toDelete->right != nullptr))
 		{
 			
-			successor = successorFinder(toDelete->right);
+			parentofDelete->right = toDelete->right;
+			delete toDelete;
+			toDelete = nullptr;
+			/*successor = successorFinder(toDelete->right);
 			parentSuccessor = parentSearch(this->root, successor->val);
+			parentSuccessor->left = nullptr;
+			if (successor->right != nullptr)
+			{
+				parentSuccessor->left = successor->right;
+			}
 			parentofDelete->right = successor;
 			successor->left = toDelete->left;
 			successor->right = toDelete->right;
-			parentSuccessor->left = nullptr;
+			*/
 			cout << "successful" << endl;
 
 		}
-		else //if toDelete left is not null and to delete right is not null
+		else 
 		{
-			//cout << "toDelete left but right before finding succ " << toDelete->left->val << endl;
 			if (toDelete->right != nullptr)
 			{
 				successor = successorFinder(toDelete->right);
@@ -444,15 +407,18 @@ void BST::removalHelper(int key)
 				successor->left = toDelete->left;
 				if (parentSuccessor != toDelete)
 				{
-					successor->right = toDelete->right;
 					parentSuccessor->left = nullptr;
-
+					if (successor->right != nullptr)
+					{
+						parentSuccessor->left = successor->right;
+					}
+					successor->right = toDelete->right;
 				}
 				delete toDelete;
+				toDelete = nullptr;
 				cout << "successful" << endl;
 			}
 		}
-		updateHeightAfterRemove(this->root, parentofDelete->val);
 	}
 	else if (parentofDelete != nullptr && parentofDelete->val > key)
 	{
@@ -462,6 +428,7 @@ void BST::removalHelper(int key)
 		{
 			parentofDelete->left = nullptr;
 			delete toDelete;
+			toDelete = nullptr;
 			cout << "successful" << endl;
 
 		}
@@ -469,12 +436,14 @@ void BST::removalHelper(int key)
 		{
 			parentofDelete->left = toDelete->left;
 			delete toDelete;
+			toDelete = nullptr;
 			cout << "successful" << endl;
 		}
 		else if ((toDelete->left == nullptr) && (toDelete->right != nullptr))
 		{
 			parentofDelete->left = toDelete->right;
 			delete toDelete;
+			toDelete = nullptr;
 			cout << "successful" << endl;
 		}
 		else
@@ -494,6 +463,7 @@ void BST::removalHelper(int key)
 				successor->left = toDelete->left;
 				parentofDelete->left = successor;
 				delete toDelete;
+				toDelete = nullptr;
 				cout << "successful" << endl;
 
 			}
@@ -502,20 +472,26 @@ void BST::removalHelper(int key)
 				successor = toDelete->right;
 				successor->left = toDelete->left;
 				parentofDelete->right = successor;
+				delete toDelete;
+				toDelete = nullptr;
 				cout << "successful" << endl;
 
 			}
 		}
-	
-	updateHeightAfterRemove(this->root, parentofDelete->val);
-
 	}
 	else
 	{
 	cout << "nothing" << endl;
 	}
 	
-	
+	if (successor == nullptr)
+	{
+		updateHeightAfterRemove(this->root, parentofDelete->val);
+	}
+	else
+	{
+		updateHeightAfterRemove(this->root, parentSuccessor->val);
+	}
 	return;
 }
 void BST::removal(int key)
@@ -593,10 +569,24 @@ BST::TreeNode* BST::rotate(TreeNode* node)
 		else
 		{
 			TreeNode* grandchild = child->left;
-			grandchild->right = child;
-			child->left = nullptr;
+			if (grandchild->left != nullptr)
+			{
+				child->left = grandchild->left;
+			}
+			else
+			{
+				child->left = nullptr;
+			}
+			if (grandchild->right != nullptr)
+			{
+				node->right = grandchild->right;
+			}
+			else
+			{
+				node->right = nullptr;
+			}
+			grandchild->right =child;
 			grandchild->left = node;
-			node->right = nullptr;
 			node->height = calculateH(node);
 			node->BF = calculateBF(node);
 			child->height = calculateH(child);
@@ -612,6 +602,21 @@ BST::TreeNode* BST::rotate(TreeNode* node)
 		if (child->BF == -1)
 		{
 			TreeNode* grandchild = child->right;
+			if (grandchild->left != nullptr)
+			{
+				child->right = grandchild->left;			}
+			else
+			{
+				child->left = nullptr;
+			}
+			if (grandchild->right != nullptr)
+			{
+				node->left = grandchild->right;
+			}
+			else
+			{
+				node->right = nullptr;
+			}
 			grandchild->left = child;
 			child->right = nullptr;
 			grandchild->right = node;
