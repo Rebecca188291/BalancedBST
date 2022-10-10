@@ -12,6 +12,18 @@ int main()
 {
 	BST bst;
 
+	bst.insert("A", 60000000);
+	bst.insert("B", 70000000);
+	bst.insert("C", 40000000);
+	bst.insert("D", 20000000);
+	bst.insert("E", 30000000);
+	bst.insert("F", 90000000);
+	bst.insert("G", 45000000);
+	bst.insert("H", 10000000);
+	bst.inorder();
+	bst.removeinOrder(9); //shoiuld remove E
+	bst.inorder();
+	/*
 	string numCommands;
 	getline(cin, numCommands);
 	string command;
@@ -27,7 +39,7 @@ int main()
 			string name = command.substr(8, stringEnd);
 			int idBeg = command.length() - 8; // length - 8
 			string id = command.substr(idBeg, 8);
-			if ((id.length() > 8) || id.length() < 8)
+			if ((id.length() > 8) || id.length() < 8 || id.substr(0, 1).compare(" ") == 0)
 			{
 				cout << "unsuccessful" << endl;
 			}
@@ -127,5 +139,6 @@ int main()
 			}
 		}
 	}	
+	*/
 }
 

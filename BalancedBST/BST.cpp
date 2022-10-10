@@ -53,7 +53,7 @@ void BST::insert(string a, int key)
 //the traversal functions
 void BST::helpInorder(BST::TreeNode* root, vector<string>& names)
 {
-	if (root == NULL)
+	if (root == nullptr)
 	{
 		cout << "";
 	}
@@ -72,7 +72,7 @@ void BST::inorder()
 	{
 		if (i == names.size() - 1)
 		{
-			cout << names[i];
+			cout << names[i] << endl;
 		}
 		else
 		{
@@ -82,7 +82,7 @@ void BST::inorder()
 }
 void BST::helperPreorder(TreeNode* root, vector<string>& names)
 {
-	if (root == NULL)
+	if (root == nullptr)
 	{
 		cout << "";
 	}
@@ -101,7 +101,7 @@ void BST::preorder()
 	{
 		if (i == names.size() - 1)
 		{
-			cout << names[i];
+			cout << names[i] << endl;
 		}
 		else
 		{
@@ -111,7 +111,7 @@ void BST::preorder()
 }
 void BST::helperPostorder(TreeNode* root, vector<string>& names)
 {
-	if (root == NULL)
+	if (root == nullptr)
 	{
 		cout << "";
 	}
@@ -130,7 +130,7 @@ void BST::postorder()
 	{
 		if (i == names.size() - 1)
 		{
-			cout << names[i];
+			cout << names[i] << endl;
 		}
 		else
 		{
@@ -457,17 +457,6 @@ void BST::removalHelper(int key)
 			parentofDelete->right = toDelete->right;
 			delete toDelete;
 			toDelete = nullptr;
-			/*successor = successorFinder(toDelete->right);
-			parentSuccessor = parentSearch(this->root, successor->val);
-			parentSuccessor->left = nullptr;
-			if (successor->right != nullptr)
-			{
-				parentSuccessor->left = successor->right;
-			}
-			parentofDelete->right = successor;
-			successor->left = toDelete->left;
-			successor->right = toDelete->right;
-			*/
 			cout << "successful" << endl;
 
 		}
@@ -732,35 +721,39 @@ BST::TreeNode* BST::rotate(TreeNode* node)
 }
 
 //Functions for removing nth node
-void BST::findNNode(TreeNode* root, int n, int& num)
+void BST::findNNode(TreeNode* root, int n, int& num, bool& found)
 {
+	if (num > n)
+	{
+		return;
+	}
 	if (root == nullptr)
 	{
 		return;
 	}
-	if (num == n)
+	else
 	{
-		return;
-	}
-	if (num < n)
-	{
-		findNNode(root->left, n, num);
-		num++;
+		findNNode(root->left, n, num, found);
 		if (num == n)
 		{
-			cout << "removing: " << this->root->name << endl;
-			removal(this->root->val);
+			removal(root->val);
+			found = true;
+			num++;
 			return;
 		}
-		findNNode(this->root->right, n, num);
+		num++;
+		findNNode(root->right, n, num, found);
 	}
-	return;
-
 }
 void BST::removeinOrder(int n)
 {
 	int num = 0;
-	findNNode(this->root, n, num);
+	bool found = false;
+	findNNode(this->root, n, num, found);
+	if (!found)
+	{
+		cout << "unsuccessful" << endl;
+	}
 }
 
 

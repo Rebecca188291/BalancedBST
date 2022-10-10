@@ -20,6 +20,20 @@ class BST
 
 	TreeNode* root = nullptr;
 
+
+	void destruct(TreeNode* root)
+	{
+		if (root->left != nullptr)
+		{
+			destruct(root->left);
+		}
+		if (root->right != nullptr)
+		{
+			destruct(root->right);
+		}
+		delete root;
+		root = nullptr;
+	}
 	BST::TreeNode* helperInsert(TreeNode* root, string a, int key);
 	void helpInorder(TreeNode* root, vector<string>& names);
 	bool helpValidName(string a);
@@ -31,7 +45,7 @@ class BST
 	int calculateBF(TreeNode* root);
 	int calculateH(TreeNode* root);
 	BST::TreeNode* rotate(TreeNode* node);
-	void findNNode(TreeNode* root, int n, int& num);
+	void findNNode(TreeNode* root, int n, int& num, bool& found);
 	void helperPreorder(TreeNode* root, vector<string>& names);
 	void helperPostorder(TreeNode* root, vector<string>& names);
 	void removalHelper(int key);
@@ -40,6 +54,10 @@ class BST
 
 public:
 
+	~BST()
+	{
+		destruct(this->root);
+	}
 	void inorder();
 	void preorder();
 	void postorder();
