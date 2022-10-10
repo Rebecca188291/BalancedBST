@@ -67,6 +67,11 @@ void BST::helpInorder(BST::TreeNode* root, vector<string>& names)
 void BST::inorder()
 {
 	vector<string> names;
+	if (this->root == nullptr)
+	{
+		cout << "";
+		return;
+	}
 	helpInorder(this->root, names);
 	for (int i = 0; i < names.size(); i++)
 	{
@@ -96,6 +101,11 @@ void BST::helperPreorder(TreeNode* root, vector<string>& names)
 void BST::preorder()
 {
 	vector<string> names;
+	if (this->root == nullptr)
+	{
+		cout << "";
+		return;
+	}
 	helperPreorder(this->root, names);
 	for (int i = 0; i < names.size(); i++)
 	{
@@ -125,6 +135,11 @@ void BST::helperPostorder(TreeNode* root, vector<string>& names)
 void BST::postorder()
 {
 	vector<string> names;
+	if (this->root == nullptr)
+	{
+		cout << "";
+		return;
+	}
 	helperPostorder(this->root, names);
 	for (int i = 0; i < names.size(); i++)
 	{
@@ -151,6 +166,11 @@ void BST::printLevelHelper(TreeNode* root)
 }
 void BST::printLevelCount()
 {
+	if (this->root == nullptr)
+	{
+		cout << "0";
+		return;
+	}
 	printLevelHelper(this->root);
 }
 
@@ -381,21 +401,37 @@ void BST::removalHelper(int key)
 	//code for trying to remove the main root
 	if (this->root->val == key)
 	{
-		successor = successorFinder(this->root->right);
 		toDelete = this->root;
+		if (this->root->right == nullptr)
+		{
+			if (this->root->left != nullptr)
+			{
+				this->root = toDelete->left;
+				delete toDelete;
+				toDelete = nullptr;
+				cout << "successful" << endl;
+				return;
+			}
+			else
+			{
+				delete toDelete;
+				this->root = nullptr;
+				toDelete = nullptr;
+				cout << "successful" << endl;
+				return;
+			}
+		}
+		successor = successorFinder(this->root->right);
 		if (successor != nullptr)
 		{
 			parentSuccessor = parentSearch(this->root, successor->val);
-			if (parentSuccessor == nullptr)
-			{
-				cout << "null par" << endl;
-			}
 			if (parentSuccessor == toDelete)
 			{
 				successor->left = toDelete->left;
 				this->root = successor;
 				delete toDelete;
 				toDelete = nullptr;
+				cout << "successful" << endl;
 				return;
 			}
 			if (successor->right != nullptr && parentSuccessor != nullptr)
@@ -407,6 +443,7 @@ void BST::removalHelper(int key)
 			this->root = successor;
 			delete toDelete;
 			toDelete = nullptr;
+			cout << "successful" << endl;
 			if (parentSuccessor != nullptr)
 			{
 				parentSuccessor->left = nullptr;
@@ -442,6 +479,7 @@ void BST::removalHelper(int key)
 			parentofDelete->right = nullptr;
 			delete toDelete;
 			toDelete = nullptr;
+			cout << "successful" << endl;
 		}
 		else if ((toDelete->left != nullptr) && (toDelete->right == nullptr))
 		{
@@ -544,7 +582,7 @@ void BST::removalHelper(int key)
 	}
 	else
 	{
-	cout << "nothing" << endl;
+		cout << "unsuccessful" << endl;
 	}
 	
 	if (successor == nullptr)

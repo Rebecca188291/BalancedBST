@@ -11,19 +11,8 @@ using namespace std;
 int main()
 {
 	BST bst;
-
-	bst.insert("A", 60000000);
-	bst.insert("B", 70000000);
-	bst.insert("C", 40000000);
-	bst.insert("D", 20000000);
-	bst.insert("E", 30000000);
-	bst.insert("F", 90000000);
-	bst.insert("G", 45000000);
-	bst.insert("H", 10000000);
-	bst.inorder();
-	bst.removeinOrder(9); //shoiuld remove E
-	bst.inorder();
-	/*
+	
+	
 	string numCommands;
 	getline(cin, numCommands);
 	string command;
@@ -139,6 +128,5 @@ int main()
 			}
 		}
 	}	
-	*/
 }
 
