@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
 	BST bst;
-	/*
+
 	string numCommands;
 	getline(cin, numCommands);
 	string command;
@@ -20,67 +20,112 @@ int main()
 	for (int i = 0; i < numCommandsInt; i++)
 	{
 		getline(cin, command);
-		if (command.substr(0, 5) == "insert")
+		if ((command.substr(0, 6).compare("insert") == 0) && (command.substr(6, 1).compare(" ") == 0))
 		{
-			int endQuotePos = command.find('\"', 8);
-			string name = command.substr(7, endQuotePos - 8);
-			string id = command.substr(endQuotePos + 2, command.length() - endQuotePos + 2);
+			//the end of the string will be length - 18. Idk why but 10 was too little?
+			int stringEnd = command.length() - 18;
+			string name = command.substr(8, stringEnd);
+			int idBeg = command.length() - 8; // length - 8
+			string id = command.substr(idBeg, 8);
 			if ((id.length() > 8) || id.length() < 8)
 			{
 				cout << "unsuccessful" << endl;
 			}
 			else
 			{
-				int idNum = stoi(id);
-				bst.insert(name, idNum);
+				try
+				{
+					int idNum = stoi(id);
+					bst.insert(name, idNum);
+				}
+				catch (const invalid_argument& e)
+				{
+					cout << "unsuccessful" << endl;
+					continue;
+				}
 			}
 		}
-	}
-	*/
-
-	BST myTree;
-	myTree.insert("Rebechka", 69696969);
-	myTree.insert("hi", 72584671);
-	//myTree.preorder();
-	myTree.insert("Styops", 42042069);
-	myTree.insert("Bruh", 19777777);
-	myTree.insert("tank", 58777777);
-	//myTree.preorder();
-
-	myTree.insert("kirby", 78777777);
-	myTree.insert("chaco", 71599999);
-	myTree.insert("mabel", 71999999);
-	//myTree.preorder();
-	//cout << endl << endl;
-	myTree.insert("YESSS", 70000000);
-	myTree.insert("wowww", 71000000);
-	myTree.insert("Frank", 18999999);
-	myTree.insert("joe", 71699999);
-	myTree.preorder();
-	cout << endl << endl;
-
-	myTree.removal(19777777);
-	myTree.preorder();
-	cout << endl << endl;
-	//myTree.preorder();
-
-
-	//myTree.removeinOrder(4);
-
-	//myTree.preorder();
-	//myTree.removal(69696969);
-	//cout << endl;
-	////cout << myTree.root->name << endl;
-	////cout << myTree.root->left->name << endl;
-	//myTree.preorder();
-
-	//cout << endl << endl << endl;
-	////myTree.bruhTester();
-	////cout << myTree.root->name << endl;
-	////cout << myTree.root->name << endl;
-	////BST::TreeNode* parent = myTree.root->left;
-	////BST::TreeNode* child = parent->left;
-	////myTree.leftRotation(parent, child);
-	////myTree.preorder();
+		if ((command.substr(0, 6).compare("remove") == 0) && (command.substr(6, 1).compare(" ") == 0))
+		{
+			int idBeg = command.length() - 8; // length - 8
+			string id = command.substr(idBeg, 8);
+			if ((id.length() > 8) || id.length() < 8)
+			{
+				cout << "unsuccessful" << endl;
+			}
+			else
+			{
+				try
+				{
+					int idNum = stoi(id);
+					bst.removal(idNum);
+				}
+				catch (const invalid_argument& e)
+				{
+					cout << "unsuccessful" << endl;
+					continue;
+				}
+			}
+		}
+		if ((command.substr(0, 6).compare("search") == 0) && (command.substr(6, 1).compare(" ") == 0) && (command.substr(7,1).compare("\"") != 0))
+		{
+			int idBeg = command.length() - 8; // length - 8
+			string id = command.substr(idBeg, 8);
+			if ((id.length() > 8) || id.length() < 8)
+			{
+				cout << "unsuccessful" << endl;
+			}
+			else
+			{
+				try
+				{
+					int idNum = stoi(id);
+					bst.search(idNum);
+				}
+				catch (const invalid_argument& e)
+				{
+					cout << "unsuccessful" << endl;
+					continue;
+				}
+			}
+		}
+		if ((command.substr(0, 6).compare("search") == 0) && (command.substr(6, 1).compare(" ") == 0) && (command.substr(7, 1).compare("\"") == 0))
+		{
+			string name = command.substr(8, command.length() - 9);
+			{
+				bst.search(name);
+			}
+		}
+		if ((command.substr(0, 12).compare("printInorder") == 0))
+		{
+			bst.inorder();
+		}
+		if ((command.substr(0, 13).compare("printPreorder") == 0))
+		{
+			bst.preorder();
+		}
+		if ((command.substr(0, 14).compare("printPostorder") == 0))
+		{
+			bst.postorder();
+		}
+		if ((command.substr(0, 15).compare("printLevelCount") == 0))
+		{
+			bst.printLevelCount();
+		}
+		if ((command.substr(0, 14).compare("removeInorder ") == 0))
+		{
+			string N = command.substr(command.length() - 1, 1);
+			try
+			{
+				int iN = stoi(N);
+				bst.removeinOrder(iN);
+			}
+			catch (const invalid_argument& e)
+			{
+				cout << "unsuccessful" << endl;
+				continue;
+			}
+		}
+	}	
 }
 

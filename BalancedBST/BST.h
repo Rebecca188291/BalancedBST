@@ -21,22 +21,19 @@ class BST
 	TreeNode* root = nullptr;
 
 	BST::TreeNode* helperInsert(TreeNode* root, string a, int key);
-	void helpInorder(TreeNode* root);
+	void helpInorder(TreeNode* root, vector<string>& names);
 	bool helpValidName(string a);
 	bool helpValidKey(int key);
 	BST::TreeNode* helperSearchID(TreeNode* root, int key);
-	void helperSearchName(TreeNode* root, string a);
+	void helperSearchName(TreeNode* root, string a, bool& found);
 	BST::TreeNode* parentSearch(TreeNode* root, int key);
 	BST::TreeNode* successorFinder(TreeNode* root);
 	int calculateBF(TreeNode* root);
 	int calculateH(TreeNode* root);
 	BST::TreeNode* rotate(TreeNode* node);
-	void leftRotation(TreeNode* parent, TreeNode* child);
-	void rightLeftRotation(TreeNode* parent, TreeNode* child);
-	void leftRightRotation(TreeNode* parent, TreeNode* child);
 	void findNNode(TreeNode* root, int n, int& num);
-	void helperPreorder(TreeNode* root);
-	void helperPostorder(TreeNode* root);
+	void helperPreorder(TreeNode* root, vector<string>& names);
+	void helperPostorder(TreeNode* root, vector<string>& names);
 	void removalHelper(int key);
 	void updateHeightAfterRemove(TreeNode* root, int key);
 	void printLevelHelper(TreeNode* root);
